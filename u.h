@@ -21,8 +21,9 @@ extern "C" {
 #endif
 
 /* bool: use built-in or stdbool.h, fallback to typedef enum. */
-#if defined(__cplusplus)
-  /* C++ has built-in bool. */
+#if defined(__cplusplus) \
+  || defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 202311L)
+  /* C++/C23 has built-in bool. */
 #elif defined(__STDC_VERSION__) && (__STDC_VERSION__ >= 199901L)
 # include <stdbool.h> /* for bool, true, false */
 #elif !defined(bool)
@@ -34,9 +35,10 @@ extern "C" {
 
 /* PROC_NAME: function name macro. */
 #ifndef PROC_NAME
-# if defined(__func__)
-#  define PROC_NAME __func__
-# elif defined(__FUNCTION__)
+# if defined(__cplusplus) \
+  || (defined(__STDC_VERSION__) && __STDC_VERSION__ >= 199901L)
+# define PROC_NAME __func__
+# elif defined(__GNUC__) || defined(_MSC_VER)
 #  define PROC_NAME __FUNCTION__
 # else
 #  define PROC_NAME "(unknown)"
