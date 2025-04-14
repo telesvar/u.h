@@ -1,3 +1,5 @@
+/* Copyright 2025 Dair Aidarkhanov */
+/* SPDX-License-Identifier: 0BSD */
 /* assume standards compliant compiler. */
 #ifndef LOCAL_U_H
 #define LOCAL_U_H
